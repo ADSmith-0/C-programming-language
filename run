@@ -1,3 +1,6 @@
 #!/bin/bash
 
-cc src/$1.c -o $1 && ./$1
+output_path=$(echo $1 | sed -E 's|src|bin|')
+
+echo $output_path
+cc "$1.c" -o $output_path && $output_path
