@@ -17,7 +17,7 @@ int main() {
     copy(trimmedLine, line);
     printf("Original Length: %d\nOriginal Line: %s\nTrimmed Length: "
            "%lu\nTrimmed Line: %s\n",
-           length, line, strlen(trimmedLine), trimmedLine);
+           length, line, strlen(trimmedLine) - 1, trimmedLine);
   }
 
   return 0;
@@ -32,12 +32,8 @@ int getLine(char line[], int limit) {
     ++i;
   }
 
-  if (character == '\n') {
-    line[i] = character;
-    ++i;
-  }
-
-  line[i] = '\0';
+  line[i] = character;
+  line[i + 1] = '\0';
   return i;
 }
 
