@@ -4,7 +4,7 @@
 #define MAX_LENGTH 1000
 
 int getLine(char line[], int limit);
-void copy(char to[], char from[]);
+int trim(char to[], char from[], int limit);
 bool isSpace(char character);
 
 int main() {
@@ -14,10 +14,10 @@ int main() {
   char trimmedLine[MAX_LENGTH];
 
   while ((length = getLine(line, MAX_LENGTH)) > 0) {
-    copy(trimmedLine, line);
+    int trimmedLength = trim(trimmedLine, line, MAX_LENGTH);
     printf("Original Length: %d\nOriginal Line: %s\nTrimmed Length: "
-           "%lu\nTrimmed Line: %s\n",
-           length, line, strlen(trimmedLine) - 1, trimmedLine);
+           "%d\nTrimmed Line: %s\n\n",
+           length, line, trimmedLength, trimmedLine);
   }
 
   return 0;
@@ -32,16 +32,11 @@ int getLine(char line[], int limit) {
     ++i;
   }
 
-  if (character == '\n') {
-    line[i] = character;
-    ++i;
-  }
-
   line[i] = '\0';
   return i;
 }
 
-void copy(char to[], char from[]) {
+int trim(char to[], char from[], int limit) {
   int strStart = 0;
   int strEnd = strlen(from) - 1;
 
@@ -50,21 +45,24 @@ void copy(char to[], char from[]) {
   }
 
   if (strStart == strlen(from) - 1) {
-    to[0] = '\0';
-    return;
+    return 0;
   }
 
   while (isSpace(from[strEnd])) {
     --strEnd;
   }
 
+  for (int i = 0; i <= limit; i++) {
+    to[i] = '\0';
+  }
+
   int toLength = 0;
-  for (int i = strStart; i < strEnd; i++) {
+  for (int i = strStart; i <= strEnd; i++) {
     to[i - strStart] = from[i];
     ++toLength;
   }
 
-  to[toLength] = '\n';
+  return toLength;
 }
 
 bool isSpace(char character) { return character == '\t' || character == ' '; }
