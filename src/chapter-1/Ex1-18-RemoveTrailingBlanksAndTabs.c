@@ -52,9 +52,7 @@ int trim(char to[], char from[], int limit) {
     --strEnd;
   }
 
-  for (int i = 0; i <= limit; i++) {
-    to[i] = '\0';
-  }
+  memset(to, 0, MAX_LENGTH);
 
   int toLength = 0;
   for (int i = strStart; i <= strEnd; i++) {
