@@ -1,9 +1,10 @@
 #include <stdio.h>
 #define MAX_LENGTH 1000
+#define COLUMN_SIZE 2
 
 int getLine(char line[], int limit);
 void clear(char line[], int limit);
-int detab(char to[], char from[]);
+int detab(char to[], char from[], int columnSize);
 
 int main() {
   int length = 0;
@@ -14,7 +15,7 @@ int main() {
 
   while ((length = getLine(line, MAX_LENGTH)) > 0) {
     clear(detabbedLine, MAX_LENGTH);
-    detabbedLength = detab(detabbedLine, line);
+    detabbedLength = detab(detabbedLine, line, COLUMN_SIZE);
     printf("original length: %4d, original: %s\ndetabbed length: %4d, "
            "detabbed: %s\n\n",
            length, line, detabbedLength, detabbedLine);
@@ -45,13 +46,15 @@ void clear(char line[], int limit) {
   }
 }
 
-int detab(char to[], char from[]) {
+int detab(char to[], char from[], int columnSize) {
   int toIndex = 0;
   int fromIndex = 0;
 
   while (from[fromIndex] != '\0') {
     if (from[fromIndex] == '\t') {
-      to[toIndex++] = ' ';
+      for (int i = 0; i < columnSize - 1; i++) {
+        to[toIndex++] = ' ';
+      }
       to[toIndex] = ' ';
     } else {
       to[toIndex] = from[fromIndex];
