@@ -13,20 +13,12 @@ int main() {
 }
 
 int any(char s1[], char s2[]) {
-  int s1Index = 0;
-  int s2Index = 0;
-
-  while (s1[s1Index] != '\0') {
-    s2Index = 0;
-
-    while (s2[s2Index] != '\0') {
+  for (int s1Index = 0; s1[s1Index] != '\0'; s1Index++) {
+    for (int s2Index = 0; s2[s2Index] != '\0'; s2Index++) {
       if (s2[s2Index] == s1[s1Index]) {
         return s1Index;
       }
-      s2Index++;
     }
-
-    s1Index++;
   }
 
   return -1;
