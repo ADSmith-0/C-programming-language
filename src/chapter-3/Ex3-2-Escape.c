@@ -15,7 +15,7 @@ int main() {
   char unescaped[MAX_LENGTH];
   unescape(input, unescaped);
 
-  printf("before: %s,\nafter: %s\n", input, unescaped);
+  printf("before: %s,\nafter: %s\n", input, escaped);
   return 0;
 }
 
@@ -31,9 +31,9 @@ void getLine(char input[], int limit) {
 }
 
 void escape(char input[], char escaped[]) {
-  int j = 0;
+  int i, j;
 
-  for (int i = 0; input[i] != '\0'; i++) {
+  for (i = 0, j = 0; input[i] != '\0'; i++, j++) {
     switch (input[i]) {
     case '\n': {
       escaped[j++] = '\\';
@@ -50,17 +50,15 @@ void escape(char input[], char escaped[]) {
       break;
     }
     }
-
-    j++;
   }
 
   escaped[j] = '\0';
 }
 
 void unescape(char input[], char unescaped[]) {
-  int j = 0;
+  int i, j;
 
-  for (int i = 0; input[i] != '\0'; i++) {
+  for (i = 0, j = 0; input[i] != '\0'; i++, j++) {
     switch (input[i]) {
     case '\\': {
       char nextChar = input[++i];
@@ -79,8 +77,6 @@ void unescape(char input[], char unescaped[]) {
       break;
     }
     }
-
-    j++;
   }
 
   unescaped[j] = '\0';
