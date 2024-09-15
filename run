@@ -2,5 +2,5 @@
 
 output_path=$(echo $1 | sed -E 's|src|bin|')
 
-echo $output_path
-cc "$1.c" -o $output_path && $output_path
+echo "compiled to: $output_path"
+gcc "$1.c" -lm -o $output_path && $output_path
