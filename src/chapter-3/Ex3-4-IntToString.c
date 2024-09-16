@@ -2,8 +2,8 @@
  * The current function for intToString in 3.6-IntToString makes the sign the
  * opposite before processing, for signed numbers the range is always -2^(dword
  * - 1) < n < 2^(dword - 1) - 1, so when we make the sign positive with the max
- * negative number we get an overflow, to fix this we simply ignore the sign and
- * process the number as is
+ * negative number we get an overflow, to fix this we simply ignore -1 if it's
+ * at the max size then plus one back after
  */
 
 #include <stdio.h>
