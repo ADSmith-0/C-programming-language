@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <strings.h>
@@ -15,13 +16,15 @@ int main() {
 
 void intToBase(int n, char output[], int base) {
   int indices, x;
-  int sign = 1;
   int outputIndex = 0;
+  char isNegativeMax = 0;
 
   if (n < 0) {
     output[outputIndex++] = '-';
-    sign = -1;
-    n++;
+    if (n == INT_MIN) {
+      isNegativeMax = 1;
+      n++;
+    }
     n = -n;
   }
 
@@ -37,7 +40,7 @@ void intToBase(int n, char output[], int base) {
         (result >= 0 && result <= 9) ? result + '0' : result + ('a' - 10);
   }
 
-  if (sign < 0) {
+  if (isNegativeMax) {
     outputIndex--;
     output[outputIndex++] += 1;
   }

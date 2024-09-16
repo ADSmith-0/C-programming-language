@@ -6,6 +6,7 @@
  * at the max size then plus one back after
  */
 
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 void intToString(int n, char output[]);
@@ -30,10 +31,14 @@ int main() {
 void intToString(int n, char output[]) {
   int i = 0;
   char sign = 1;
+  char isNegativeMax = 0;
 
   if (n < 0) {
     sign = -1;
-    n++;
+    if (n == INT_MIN) {
+      isNegativeMax = 1;
+      n++;
+    }
     n = -n;
   }
 
@@ -42,7 +47,9 @@ void intToString(int n, char output[]) {
   } while ((n /= 10) > 0);
 
   if (sign < 0) {
-    output[0]++;
+    if (isNegativeMax) {
+      output[0]++;
+    }
     output[i++] = '-';
   }
 
