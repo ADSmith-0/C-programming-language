@@ -39,7 +39,7 @@ void leftPad(int n, char output[], int minLength) {
     output[i++] = '-';
   }
 
-  while (i <= minLength) {
+  while (i < minLength) {
     output[i++] = ' ';
   }
 
