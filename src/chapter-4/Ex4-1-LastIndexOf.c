@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #define MAX_LENGTH 1000
 
 int lastStrIndex(char line[], char searchTerm[]);
@@ -14,17 +15,18 @@ int main() {
 
 int lastStrIndex(char line[], char searchTerm[]) {
   int i, j, k;
-  int lastIndexOf = -1;
+  int lineLength = strlen(line) - 1;
+  int searchTermLength = strlen(searchTerm) - 1;
 
-  for (i = 0; line[i] != '\0'; i++) {
-    for (j = i, k = 0; line[j] == searchTerm[k] && searchTerm[k] != '\0';
-         j++, k++)
+  for (i = lineLength; i >= 0; i--) {
+    for (j = i, k = searchTermLength; line[j] == searchTerm[k] && k > 0;
+         j--, k--)
       ;
 
-    if (k > 0 && searchTerm[k] == '\0') {
-      lastIndexOf = i;
+    if (k == 0) {
+      return i - searchTermLength;
     }
   }
 
-  return lastIndexOf;
+  return -1;
 }
