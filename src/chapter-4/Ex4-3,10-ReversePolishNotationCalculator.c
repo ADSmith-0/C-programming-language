@@ -6,12 +6,17 @@
 
 int getop(char[]);
 void push(double);
+double peek(void);
+void duplicate(void);
+void swap(void);
+void clear(void);
 double pop(void);
 
 int main() {
   int type;
   double op2;
   char s[MAX_OP];
+  char entered = 0;
 
   while ((type = getop(s)) != EOF) {
     switch (type) {
@@ -40,8 +45,30 @@ int main() {
       op2 = pop();
       push((int)pop() % (int)op2);
       break;
+    case '#':
+      printf("\t%.8g\n", peek());
+      entered = 1;
+      break;
+    case '&':
+      duplicate();
+      printf("\t%.8g\n", peek());
+      entered = 1;
+      break;
+    case '~':
+      swap();
+      printf("\t%.8g\n", peek());
+      entered = 1;
+      break;
+    case ':':
+      clear();
+      entered = 1;
+      printf("\n");
+      break;
     case '\n':
-      printf("\t%.8g\n", pop());
+      if (entered == 0) {
+        printf("\t%.8g\n", pop());
+      }
+      entered = 0;
       break;
     default:
       printf("error: unknown command %s\n", s);
@@ -63,6 +90,38 @@ void push(double f) {
     return;
   }
   stack[stackpos++] = f;
+}
+
+double peek() {
+  if (stackpos == 0) {
+    printf("error: stack empty\n");
+    return 0.0;
+  }
+  return stack[stackpos - 1];
+}
+
+void duplicate() {
+  double val = peek();
+  push(val);
+}
+
+void swap() {
+  if (stackpos < 1) {
+    printf("error: not enough values on stack to swap\n");
+    return;
+  }
+  double val1 = pop();
+  double val2 = pop();
+  push(val1);
+  push(val2);
+}
+
+void clear() {
+  while (stackpos > 0) {
+    pop();
+    stackpos--;
+  }
+  printf("stack cleared\n");
 }
 
 double pop() {
