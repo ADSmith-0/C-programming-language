@@ -1,8 +1,11 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_OP 100
 #define NUMBER '0'
+#define LIB_FN 'a'
 
 int getop(char[]);
 void push(double);
@@ -22,6 +25,43 @@ int main() {
     switch (type) {
     case NUMBER:
       push(atof(s));
+      break;
+    case LIB_FN:
+      if (!strncmp(s, "pow", 3)) {
+        double op2 = pop();
+        push(pow(pop(), op2));
+      } else if (!strncmp(s, "exp", 3))
+        push(exp(pop()));
+      else if (!strncmp(s, "log", 3))
+        push(log(pop()));
+      else if (!strncmp(s, "log10", 5))
+        push(log10(pop()));
+      else if (!strncmp(s, "sqrt", 4))
+        push(sqrt(pop()));
+      else if (!strncmp(s, "fabs", 4))
+        push(fabs(pop()));
+      else if (!strncmp(s, "ceil", 4))
+        push(ceil(pop()));
+      else if (!strncmp(s, "floor", 5))
+        push(floor(pop()));
+      else if (!strncmp(s, "sin", 3))
+        push(sin(pop()));
+      else if (!strncmp(s, "cos", 3))
+        push(cos(pop()));
+      else if (!strncmp(s, "tan", 3))
+        push(tan(pop()));
+      else if (!strncmp(s, "asin", 4))
+        push(asin(pop()));
+      else if (!strncmp(s, "acos", 4))
+        push(acos(pop()));
+      else if (!strncmp(s, "atan", 4))
+        push(atan(pop()));
+      else if (!strncmp(s, "sinh", 4))
+        push(sinh(pop()));
+      else if (!strncmp(s, "cosh", 4))
+        push(cosh(pop()));
+      else if (!strncmp(s, "tanh", 4))
+        push(tanh(pop()));
       break;
     case '+':
       push(pop() + pop());
@@ -143,7 +183,7 @@ int getop(char s[]) {
   while ((s[0] = c = getch()) == ' ' || c == '\t')
     ;
   s[1] = '\0';
-  if (!isdigit(c) && c != '.') {
+  if (!isalnum(c) && c != '.') {
     if (c == '-') {
       int nextChar = getch();
       ungetch(nextChar);
@@ -156,6 +196,17 @@ int getop(char s[]) {
   }
 
   i = 0;
+  if (isalpha(c)) {
+    while (isalnum(s[++i] = c = getch()))
+      ;
+
+    s[i] = '\0';
+    if (c != EOF) {
+      ungetch(c);
+    }
+    return LIB_FN;
+  }
+
   if (c == '-') {
     s[i] = '-';
     s[++i] = c = getch();
