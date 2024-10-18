@@ -263,19 +263,24 @@ int getop(char s[]) {
   return NUMBER;
 }
 
-#define BUFSIZE 1
+int bufchar = '\0';
 
-char buf[BUFSIZE];
-int bufpos = 0;
-
-int getch(void) { return (bufpos > 0) ? buf[--bufpos] : getchar(); }
+int getch(void) {
+  int temp;
+  if (bufchar != '\0') {
+    temp = bufchar;
+    bufchar = '\0';
+    return temp;
+  }
+  return getchar();
+}
 
 void ungetch(int c) {
-  if (bufpos >= BUFSIZE) {
-    printf("ungetch: too many characters\n");
+  if (bufchar != '\0') {
+    printf("error: cannot push another character, one already exists");
     return;
   }
-  buf[bufpos++] = c;
+  bufchar = c;
 }
 
 void ungets(char s[]);
