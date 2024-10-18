@@ -1,3 +1,7 @@
+/**
+ * For Ex3-9 I wasn't sure what this meant so I've decided to just move on
+ * past it
+ */
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
