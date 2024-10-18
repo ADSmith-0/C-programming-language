@@ -263,7 +263,7 @@ int getop(char s[]) {
   return NUMBER;
 }
 
-#define BUFSIZE 100
+#define BUFSIZE 1
 
 char buf[BUFSIZE];
 int bufpos = 0;
