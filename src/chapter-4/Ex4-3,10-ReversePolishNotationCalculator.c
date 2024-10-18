@@ -5,7 +5,9 @@
 
 #define MAX_OP 100
 #define NUMBER '0'
-#define LIB_FN 'a'
+#define LIB_FN '_'
+#define SET_VAR 'a'
+#define GET_VAR 'b'
 
 int getop(char[]);
 void push(double);
@@ -14,6 +16,8 @@ void duplicate(void);
 void swap(void);
 void clear(void);
 double pop(void);
+
+double variables[27] = {};
 
 int main() {
   int type;
@@ -62,6 +66,18 @@ int main() {
         push(cosh(pop()));
       else if (!strncmp(s, "tanh", 4))
         push(tanh(pop()));
+      break;
+    case GET_VAR:
+      if (s[0] == '$') {
+        push(variables[0]);
+      } else if (s[0] >= 'a' && s[0] <= 'z') {
+        push(variables[s[0] - 'a' + 1]);
+      }
+      break;
+    case SET_VAR:
+      if (s[0] >= 'a' && s[0] <= 'z') {
+        variables[s[0] - 'a' + 1] = variables[0];
+      }
       break;
     case '+':
       push(pop() + pop());
@@ -129,6 +145,7 @@ void push(double f) {
     printf("error: stack full can't push %g\n", f);
     return;
   }
+  variables[0] = f;
   stack[stackpos++] = f;
 }
 
@@ -183,12 +200,30 @@ int getop(char s[]) {
   while ((s[0] = c = getch()) == ' ' || c == '\t')
     ;
   s[1] = '\0';
-  if (!isalnum(c) && c != '.') {
+  if (!isdigit(c) && c != '.') {
     if (c == '-') {
       int nextChar = getch();
       ungetch(nextChar);
       if (!isdigit(nextChar)) {
         return c;
+      }
+    } else if (c >= 'a' && c <= 'z') {
+      int nextChar = getch();
+      ungetch(nextChar);
+      if (!isalnum(nextChar)) {
+        return GET_VAR;
+      }
+    } else if (c == '$') {
+      int nextChar = getch();
+      if (!isalnum(nextChar)) {
+        ungetch(nextChar);
+        return GET_VAR;
+      }
+      s[0] = nextChar;
+      int afterChar = getch();
+      ungetch(afterChar);
+      if (!isalnum(afterChar)) {
+        return SET_VAR;
       }
     } else {
       return c;
