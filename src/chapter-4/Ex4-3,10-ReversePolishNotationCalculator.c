@@ -277,3 +277,12 @@ void ungetch(int c) {
   }
   buf[bufpos++] = c;
 }
+
+void ungets(char s[]);
+
+void ungets(char s[]) {
+  int i;
+  for (i = 0; i != '\0'; i++) {
+    ungetch(s[i]);
+  }
+}
