@@ -3,7 +3,6 @@
 static char buf[BUFSIZE];
 static int bufp = 0;
 
-// comment!
 int getch(void) { return (bufp > 0) ? buf[--bufp] : getchar(); }
 
 void ungetch(int c) {
