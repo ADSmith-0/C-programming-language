@@ -1,6 +1,0 @@
-#!/bin/bash
-
-output_path=$(echo $1 | sed -E 's|src|bin|')
-
-echo "compiled to: $output_path"
-gcc "$1.c" -lm -o $output_path && $output_path
