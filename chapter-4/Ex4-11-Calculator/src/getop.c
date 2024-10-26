@@ -2,6 +2,17 @@
 #include <ctype.h>
 #include <stdio.h>
 
+static int bufchar = 0;
+
+static int getch(void) {
+  if (bufchar != 0) {
+    int temp = bufchar;
+    bufchar = 0;
+    return temp;
+  }
+  return getchar();
+}
+
 int getop(char s[]) {
   int i, c;
 
@@ -25,7 +36,7 @@ int getop(char s[]) {
 
   s[i] = '\0';
   if (c != EOF) {
-    ungetch(c);
+    bufchar = c;
   }
 
   return NUMBER;
