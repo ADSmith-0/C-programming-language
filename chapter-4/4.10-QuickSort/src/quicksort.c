@@ -11,7 +11,7 @@ void quicksort(int v[], int left, int right) {
   swap(v, left, (left + right) / 2);
   last = left;
   for (i = left + 1; i <= right; i++) {
-    if (v[i] < v[left]) {
+    if (v[i] < v[left] && v[i] != '\0') {
       swap(v, ++last, i);
     }
   }
