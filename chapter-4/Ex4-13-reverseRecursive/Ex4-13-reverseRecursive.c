@@ -1,27 +1,24 @@
 #include <stdio.h>
-#include <string.h>
-void reverse(char[], char[]);
+void reverse(char[], int startIndex, int endIndex);
 
 int main() {
-  char from[] = "hello world";
-  char to[20];
+  char s[] = "hello world";
 
-  reverse(to, from);
-  printf("from:\t%s\nto:\t%s\n", from, to);
+  printf("original string: %s\n", s);
+  reverse(s, 0, 10);
+  printf("reversed string: %s\n", s);
 
   return 0;
 }
 
-void reverse(char to[], char from[]) {
-  int toLength = strlen(to);
-  int fromLength = strlen(from);
-  int currentFromIndex = (fromLength - 1) - toLength;
+void reverse(char s[], int startIndex, int endIndex) {
+  int temp;
 
-  to[toLength] = from[currentFromIndex];
+  temp = s[endIndex];
+  s[endIndex] = s[startIndex];
+  s[startIndex] = temp;
 
-  if (toLength != fromLength) {
-    return reverse(to, from);
+  if (startIndex < endIndex) {
+    reverse(s, startIndex + 1, endIndex - 1);
   }
-
-  to[++toLength] = '\0';
 }
