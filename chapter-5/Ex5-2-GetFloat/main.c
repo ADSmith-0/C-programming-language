@@ -1,6 +1,5 @@
 #include "GetFloat.h"
 #include <ctype.h>
-#include <math.h>
 #include <stdio.h>
 
 int getfloat(double *);
