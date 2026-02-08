@@ -4,7 +4,7 @@
 cd $1
 for file in ./*.c
 do
-  filename=$(echo $file | sed -E 's|\.\/(.*)\.c|\1|')
+  filename=$(echo $file | tr -d ".c")
   echo $filename
   bash ../../run.sh $filename
 done
