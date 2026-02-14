@@ -10,7 +10,7 @@ int main() {
 void mystrcat(char *s, char *t) {
   while (*s++)
     ;
-  s--;
+  s--; // decrement to overwrite termination character '\0'
 
   while ((*s++ = *t++))
     ;
